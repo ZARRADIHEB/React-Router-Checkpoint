@@ -4,7 +4,6 @@
   gap: 50px;
   width: max-content;
   margin-left: 10%;
-  margin-top: 20px;
 }
 
 input {
@@ -15,6 +14,7 @@ input {
   margin-left: 5px;
   font-weight: bold;
   text-transform: capitalize;
+  text-align: center;
 }
 
 input[type="number"] {
@@ -27,6 +27,62 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+input[type="url"] {
+  text-transform: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10%;
+}
+
+.wrapper-add-movie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin: 300px auto 0;
+  padding: 20px;
+  background: teal;
+  width: fit-content;
+  border-radius: 10px;
+}
+
+.add-movie-btn,
+.home-btn {
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  position: relative;
+  transition: all 0.3s linear;
+  border: none;
+  &:hover {
+    color: #fff;
+    background: #000;
+  }
+}
+
+.add-movie-btn::before,
+.home-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background: #000;
+  border-radius: 10px;
+  opacity: 0.5;
+  transition: all 0.3s linear;
+}
+
+.add-movie-btn:hover::before,
+.home-btn:hover::before {
+  width: 100%;
+}
+
 @media screen and (max-width: 750px) {
   .filter-wrapper {
     width: 100%;
@@ -37,5 +93,14 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   label {
     display: block;
+    margin-bottom: 5px;
+  }
+
+  header {
+    flex-direction: column;
+    margin-right: 0;
+    button {
+      margin-top: 20px;
+    }
   }
 }

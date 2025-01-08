@@ -1,4 +1,4 @@
-export const moviesData = [
+const moviesData = [
   {
     title: "The Shawshank Redemption",
     description:
@@ -78,3 +78,5 @@ export const moviesData = [
     rating: 8.8,
   },
 ];
+
+export default moviesData;

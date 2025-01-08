@@ -1,27 +1,34 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function MovieCard({ movie }) {
   return (
     <div
-      class="card"
+      className="card"
       style={{
         width: "18rem",
-        height: "750px",
+        height: "650px",
         textAlign: "center",
         border: "none",
       }}
     >
       <img
         src={movie.posterURL}
-        class="card-img-top"
+        className="card-img-top"
         alt={movie.title}
         style={{ height: "400px" }}
       />
-      <div class="card-body bg-dark text-white">
-        <h5 class="card-title">{movie.title}</h5>
-        <p class="card-text text-danger fw-bold fs-5">{movie.rating} / 10</p>
+      <div className="card-body bg-dark text-white">
+        <h5 style={{ textTransform: "capitalize" }} className="card-title">
+          {movie.title}
+        </h5>
+        <p className="card-text text-danger fw-bold fs-5">
+          {movie.rating} / 10
+        </p>
         <h6 style={{ marginBottom: "15px" }}>{movie.description}</h6>
-        <button class="btn btn-success">Go somewhere</button>
+        <Link to={`/movie/${movie.title}`}>
+          <button className="btn btn-success">Watch Trailer</button>
+        </Link>
       </div>
     </div>
   );
