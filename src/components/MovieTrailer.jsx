@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const MovieTrailer = () => {
@@ -7,7 +7,7 @@ const MovieTrailer = () => {
   const [movieKey, setMovieKey] = useState("");
   const [movieDescripiton, setMovieDescription] = useState("");
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const apiKey = process.env.REACT_APP_API_KEY;
     try {
       const movieIdResponse = await axios.get(
@@ -38,11 +38,11 @@ const MovieTrailer = () => {
     } catch (err) {
       console.error("Error fetching data:", err);
     }
-  };
+  }, [name]); // Include `name` because it's used inside the function
 
   useEffect(() => {
     fetchData();
-  }, [name]);
+  }, [fetchData]); // Use `fetchData` in the dependency array
 
   return (
     <div
