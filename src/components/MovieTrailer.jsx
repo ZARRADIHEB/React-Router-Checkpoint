@@ -1,11 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState, useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Footer from "./Footer";
 
 const MovieTrailer = () => {
   const { name } = useParams();
   const [movieKey, setMovieKey] = useState("");
   const [movieDescripiton, setMovieDescription] = useState("");
+  const [noMovie, setNoMovie] = useState(false);
+  const [count, setCount] = useState(5);
+  const navigate = useNavigate();
 
   const fetchData = useCallback(async () => {
     const apiKey = process.env.REACT_APP_API_KEY;
@@ -17,8 +21,18 @@ const MovieTrailer = () => {
       setMovieDescription(movieDescripiton);
       const movieId = movieIdResponse.data.results[0]?.id;
       if (!movieId) {
+        setNoMovie(true);
         console.error("No movie found with the given name");
-        return;
+
+        const interval = setInterval(() => {
+          setCount((prev) => {
+            if (prev === 1) {
+              clearInterval(interval);
+              navigate("/");
+            }
+            return prev - 1;
+          });
+        }, 1000);
       }
 
       const videosResponse = await axios.get(
@@ -38,11 +52,11 @@ const MovieTrailer = () => {
     } catch (err) {
       console.error("Error fetching data:", err);
     }
-  }, [name]); // Include `name` because it's used inside the function
+  }, [name, navigate]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]); // Use `fetchData` in the dependency array
+  }, [fetchData]);
 
   return (
     <div
@@ -52,27 +66,46 @@ const MovieTrailer = () => {
         flexDirection: "column",
         alignItems: "center",
         gap: "20px",
+        marginBottom: "50px",
       }}
     >
-      {movieKey ? (
+      {noMovie ? (
         <>
-          <iframe
-            width="700"
-            height="400"
-            src={`https://www.youtube.com/embed/${movieKey}`}
-            title={`${name} - Trailer`}
-            allowFullScreen
-          ></iframe>
-          <p style={{ width: "80%", textAlign: "center", fontSize: "1.5em" }}>
-            {movieDescripiton}
-          </p>
-          <Link to={"/"}>
-            <button className="home-btn">Back To Home</button>
-          </Link>
+          <h1>No trailer available for this movie</h1>
+          <h3>Return to home page in {count}</h3>
         </>
       ) : (
-        <p>Loading trailer or no trailer available...</p>
+        <>
+          {movieKey ? (
+            <>
+              <iframe
+                width="60%"
+                height="400"
+                src={`https://www.youtube.com/embed/${movieKey}`}
+                title={`${name} - Trailer`}
+                allowFullScreen
+                style={{ borderRadius: "20px" }}
+              ></iframe>
+              <p
+                style={{
+                  width: "90%",
+                  textAlign: "center",
+                  fontSize: "clamp(1.2em,3vw,1.5rem",
+                }}
+              >
+                {movieDescripiton}
+              </p>
+              <Link to={"/"}>
+                <button className="home-btn">Back To Home</button>
+              </Link>
+            </>
+          ) : (
+            <p>Loading trailer...</p>
+          )}
+        </>
       )}
+
+      <Footer />
     </div>
   );
 };

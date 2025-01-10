@@ -7,12 +7,20 @@ import MovieList from "./components/MovieList";
 import AddMovieBtn from "./components/AddMovieBtn";
 import AddMovie from "./components/AddMovie";
 import MovieTrailer from "./components/MovieTrailer";
+import Page404 from "./Page404";
 
 function App() {
   const [movies, setMovies] = useState(moviesData);
   const [filterTitle, setFilterTitle] = useState("");
   const [filterRating, setFilterRating] = useState(0);
   const [filteredMovies, setFilteredMovies] = useState(moviesData);
+
+  useEffect(() => {
+    const storedMovies = localStorage.getItem("movieInfos");
+    if (storedMovies) {
+      setMovies((prevMovies) => [...prevMovies, ...JSON.parse(storedMovies)]);
+    }
+  }, []);
 
   useEffect(() => {
     const filtered = movies.filter((movie) => {
@@ -52,6 +60,7 @@ function App() {
           element={<AddMovie addNewMovie={addNewMovie} />}
         />
         <Route path="/movie/:name" element={<MovieTrailer />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </div>
   );

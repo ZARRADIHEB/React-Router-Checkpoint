@@ -38,12 +38,12 @@ header {
   margin-right: 10%;
 }
 
-.wrapper-add-movie {
+form {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
-  margin: 300px auto 0;
+  margin: 200px auto 20px;
   padding: 20px;
   background: teal;
   width: fit-content;
@@ -83,7 +83,23 @@ header {
   width: 100%;
 }
 
-@media screen and (max-width: 750px) {
+.footer {
+  background-color: #000;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer span#author {
+  font-weight: bold;
+  color: red;
+}
+
+@media screen and (max-width: 992px) {
   .filter-wrapper {
     width: 100%;
     flex-direction: column;
@@ -102,5 +118,10 @@ header {
     button {
       margin-top: 20px;
     }
+  }
+
+  iframe {
+    height: 200px;
+    width: 90%;
   }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import MovieCard from "./MovieCard";
+import Footer from "./Footer";
 
 const MovieList = ({ movies }) => {
   return (
@@ -10,7 +11,7 @@ const MovieList = ({ movies }) => {
         flexWrap: "wrap",
         gap: "30px",
         justifyContent: "center",
-        marginBlock: "50px",
+        marginBlock: "70px",
       }}
     >
       {movies && movies.length > 0 ? (
@@ -20,6 +21,7 @@ const MovieList = ({ movies }) => {
           No Movies Found
         </h1>
       )}
+      <Footer />
     </div>
   );
 };
